@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sealed-secret-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/seoulcloud/sealed-secret-demo.git   # 👉 Git 레포 주소
+    targetRevision: main                                            # 👉 브랜치
+    path: apps/sealedsecret                                         # 👉 sealedsecret.yaml 위치
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+
